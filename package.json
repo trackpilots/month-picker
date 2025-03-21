@@ -1,6 +1,6 @@
 {
   "name": "@trackpilots/month-picker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A customizable month picker component for React, built with Tailwind CSS.",
   "main": "src/index.js",
   "module": "src/index.js",
