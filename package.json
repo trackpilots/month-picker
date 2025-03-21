@@ -1,26 +1,26 @@
 {
-  "name": "@trackpilots/single-select-date-picker",
+  "name": "@trackpilots/month-picker",
   "version": "1.0.1",
-  "description": "A customizable single select date picker component for React, built with Tailwind CSS.",
+  "description": "A customizable month picker component for React, built with Tailwind CSS.",
   "main": "src/index.js",
   "module": "src/index.js",
   "types": "src/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/trackpilots/single-select-date-picker.git"
+    "url": "https://github.com/trackpilots/month-picker.git"
   },
   "bugs": {
-    "url": "https://github.com/trackpilots/single-select-date-picker/issues"
+    "url": "https://github.com/trackpilots/month-picker/issues"
   },
   "homepage": "https://quickappstudio.com/our-team",
   "author": "Sakthivel Govinthan",
   "license": "MIT",
   "keywords": [
     "react",
-    "date-picker",
+    "month-picker",
     "calendar",
     "trackpilots",
-    "datepicker",
+    "monthpicker",
     "ui-component"
   ],
   "scripts": {
