@@ -56,7 +56,7 @@ const DateFilter = ({
   };
 
   return (
-    <div className="relative z-10">
+    <div className="relative z-30">
       <button
         ref={buttonRef}
         onClick={() => {
