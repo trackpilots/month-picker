@@ -3,10 +3,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoCalendarOutline } from "react-icons/io5";
 
-const options = { year: "numeric", month: "short", day: "numeric" };
+const options = {
+  year: "numeric",
+  month: "long",
+};
 
 const DateFilter = ({
-  defaultChoosenDate,
   selectedDate,
   onSelect,
   selectedColor,
@@ -16,7 +18,7 @@ const DateFilter = ({
   const buttonRef = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [choosenValue, setChoosenValue] = useState(defaultChoosenDate);
+  const [choosenValue, setChoosenValue] = useState();
 
   useEffect(() => {
     if (selectedDate) {
@@ -49,10 +51,17 @@ const DateFilter = ({
     };
   }, [isOpen]);
 
-  const handleSelectDate = ({ date, value }) => {
-    setChoosenValue(date);
-    onSelect({ date, value })
+  const handleSelectDate = ({ month, value }) => {
+    setChoosenValue(month);
+    onSelect({ month, value });
     setIsOpen(false);
+  };
+
+  // Custom Render for Month Content
+  const renderMonthContent = (month, shortMonth, longMonth, day) => {
+    const fullYear = new Date(day).getFullYear();
+    const tooltipText = `Selected Month: ${longMonth} ${fullYear}`;
+    return <span title={tooltipText}>{shortMonth}</span>;
   };
 
   return (
@@ -81,20 +90,26 @@ const DateFilter = ({
             `}
           >
             <DatePicker
+              inline
               selected={selectedDate}
               onChange={(dates) => {
-                const choosenString = `${new Date(dates).toLocaleDateString(
-                    undefined,
-                    options
-                  )}`;
+                const choosenString = new Date(dates).toLocaleDateString(
+                  undefined,
+                  {
+                    year: "numeric",
+                    month: "long",
+                  }
+                );
                 handleSelectDate({
-                  date: choosenString,
+                  month: choosenString,
                   value: dates,
                 });
               }}
-              inline
+              renderMonthContent={renderMonthContent}
+              showMonthYearPicker
+              dateFormat="MMMM yyyy"
               className={`bg-white border rounded p-2`}
-              calendarClassName="custom-datepicker"
+              calendarClassName="custom-month-picker"
             />
           </div>
         </div>
@@ -102,35 +117,31 @@ const DateFilter = ({
 
       <style>
         {`
-        .custom-datepicker .react-datepicker__day--selected,
-        .custom-datepicker .react-datepicker__day--in-range,
-        .custom-datepicker .react-datepicker__day--keyboard-selected {
-            background-color: ${selectedColor} !important;
-            color: white !important;
+
+      .custom-month-picker .react-datepicker__month-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+      }
+
+
+        .custom-month-picker .react-datepicker__month-text {
+          padding: 10px;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s;
         }
 
-        .custom-datepicker .react-datepicker__day--selected,
-        .custom-datepicker .react-datepicker__day--range-start,
-        .custom-datepicker .react-datepicker__day--range-end {
-            background-color: ${selectedColor} !important;
-            color: white !important;
-            border-radius: 6px !important;
-            font-weight: bold;
+        .custom-month-picker .react-datepicker__month-text--selected,
+        .custom-month-picker .react-datepicker__month-text--keyboard-selected {
+          background-color:${selectedColor};  /* Change this to your preferred color */
+          color: white;
         }
 
-        .custom-datepicker .react-datepicker__day--in-range {
-            background-color: ${selectedColor} !important;
+        .custom-month-picker .react-datepicker__month-text:hover {
+          background-color:${selectedColor}; 
+          color: white;
         }
-
-        .custom-datepicker .react-datepicker__day--in-selecting-range {
-            background-color: ${selectedColor}d3 !important;
-        }
-
-        .custom-datepicker .react-datepicker__day:hover {
-            background-color: ${selectedColor} !important;
-            color: white !important;
-        }
-
       `}
       </style>
     </div>
@@ -138,7 +149,6 @@ const DateFilter = ({
 };
 
 DateFilter.defaultProps = {
-  defaultChoosenDate:"Today",
   selectedDate: null, // Default to null if no startDate is provided
   onSelect: () => {}, // Prevents "onSelect is not a function" error
   selectedColor: "#9D55FF",
