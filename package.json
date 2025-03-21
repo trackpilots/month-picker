@@ -1,6 +1,6 @@
 {
   "name": "@trackpilots/single-select-date-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A customizable single select date picker component for React, built with Tailwind CSS.",
   "main": "src/index.js",
   "module": "src/index.js",
